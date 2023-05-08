@@ -1,0 +1,59 @@
+{
+    "menu": [
+      {
+        "name": "Nasi Goreng Merah",
+        "price": 20000,
+        "availability": true
+      },
+      {
+        "name": "Nasi Goreng Hongkong",
+        "price": 20000,
+        "availability": true
+      },
+      {
+        "name": "Nasi Goreng Szechuan",
+        "price": 20000,
+        "availability": true
+      },
+      {
+        "name": "Kwetiau Goreng",
+        "price": 20000,
+        "availability": true
+      },
+      {
+        "name": "Kwetiau Kuah",
+        "price": 20000,
+        "availability": true
+      },
+      {
+        "name": "Mie Goreng",
+        "price": 20000,
+        "availability": true
+      },
+      {
+        "name": "Mie Kuah",
+        "price": 20000,
+        "availability": true
+      },
+      {
+        "name": "Bihun Goreng",
+        "price": 20000,
+        "availability": true
+      },
+      {
+        "name": "Bihun Kuah",
+        "price": 20000,
+        "availability": true
+      },
+      {
+        "name": "Penyetan D'Taman",
+        "price": 25000,
+        "availability": true
+      },
+      {
+        "name": "Nasi Putih",
+        "price": 4000,
+        "availability": true
+      }
+    ]
+  }
