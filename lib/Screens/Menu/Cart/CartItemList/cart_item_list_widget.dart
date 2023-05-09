@@ -1,19 +1,22 @@
-import 'dart:developer';
-
 import 'package:dtaman_cashier/Screens/Menu/Cart/CartItem/cart_item_widget.dart';
-import 'package:dtaman_cashier/Screens/Menu/Cart/cart_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 class CartItemListWidget extends StatefulWidget {
   static final GlobalKey<_CartItemListWidgetState> globalKey = GlobalKey();
-  CartItemListWidget({Key? key}) : super(key: globalKey);
+  final Function refreshParent;
+  CartItemListWidget({Key? key, required this.refreshParent})
+      : super(key: globalKey);
 
   @override
   State<CartItemListWidget> createState() => _CartItemListWidgetState();
 }
 
 class _CartItemListWidgetState extends State<CartItemListWidget> {
+  final getStorage = GetStorage('order');
+
   void refreshList() {
+    widget.refreshParent();
     setState(() {});
   }
 

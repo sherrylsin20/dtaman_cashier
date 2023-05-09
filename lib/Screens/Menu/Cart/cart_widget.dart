@@ -1,5 +1,5 @@
 import 'package:dtaman_cashier/Screens/Menu/Cart/CartItemList/cart_item_list_widget.dart';
-import 'package:dtaman_cashier/Screens/Menu/Cart/cart_service.dart';
+import 'package:dtaman_cashier/Screens/Menu/menu_service.dart';
 import 'package:dtaman_cashier/Utilities/string_formatter.dart';
 import 'package:dtaman_cashier/Widgets/FlexibleWidthButton/flexible_width_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,10 @@ class CartWidget extends StatefulWidget {
 }
 
 class _CartWidgetState extends State<CartWidget> {
+  void refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -51,7 +55,7 @@ class _CartWidgetState extends State<CartWidget> {
             const SizedBox(
               height: 12,
             ),
-            CartItemListWidget(),
+            CartItemListWidget(refreshParent: refresh),
             const SizedBox(
               height: 12,
             ),

@@ -1,15 +1,15 @@
-import 'dart:developer';
-
+import 'package:dtaman_cashier/Screens/Menu/menu_service.dart';
 import 'package:dtaman_cashier/Utilities/string_formatter.dart';
+import 'package:dtaman_cashier/Widgets/FlexibleWidthButton/flexible_width_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class AddToCartPopUpWidget extends StatefulWidget {
   final dynamic item;
-  final Function() refreshParent;
+  final Function refreshParent;
   const AddToCartPopUpWidget(
-      {required this.item, required this.refreshParent, Key? key})
+      {Key? key, required this.item, required this.refreshParent})
       : super(key: key);
 
   @override
@@ -17,27 +17,42 @@ class AddToCartPopUpWidget extends StatefulWidget {
 }
 
 class _AddToCartPopUpWidgetState extends State<AddToCartPopUpWidget> {
-  bool isTakeaway = false;
-  int amount = 0;
-  bool showError = false;
   TextEditingController notesTextEditingController = TextEditingController();
-  final getStorage = GetStorage('order');
+  int amount = 0;
+  bool isTakeaway = false;
+  bool showError = false;
   List cartItems = [];
 
   @override
   void initState() {
     super.initState();
-    cartItems = getStorage.read('currentCart') ?? [];
+    cartItems = getCurrentCart();
+  }
+
+  void addAmount() {
+    setState(() {
+      amount++;
+      showError = false;
+    });
+  }
+
+  void substractAmount() {
+    if (amount > 0) {
+      setState(() {
+        amount--;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsetsDirectional.fromSTEB(24, 12, 24, 24),
+      padding: const EdgeInsets.all(24),
       width: Get.size.width * 0.4,
       decoration: BoxDecoration(
-          color: Get.theme.highlightColor,
-          borderRadius: const BorderRadius.all(Radius.circular(20))),
+        color: Get.theme.highlightColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -58,26 +73,13 @@ class _AddToCartPopUpWidgetState extends State<AddToCartPopUpWidget> {
             const SizedBox(
               height: 12,
             ),
-            Text(
-              widget.item['name'],
-              style: TextStyle(
-                fontFamily: 'Lato',
-                color: Get.theme.shadowColor,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text(widget.item['name'], style: Get.theme.textTheme.headline1),
             const SizedBox(
-              height: 12,
+              height: 6,
             ),
             Text(
               currencyWithSymbolFormatter(widget.item['price']),
-              style: TextStyle(
-                fontFamily: 'Lato',
-                color: Get.theme.errorColor,
-                fontSize: 32,
-                fontWeight: FontWeight.w900,
-              ),
+              style: Get.theme.textTheme.headline2,
             ),
             const SizedBox(
               height: 24,
@@ -92,23 +94,13 @@ class _AddToCartPopUpWidgetState extends State<AddToCartPopUpWidget> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     InkWell(
-                      onTap: () => {
-                        if (amount > 0)
-                          {
-                            setState(
-                              () {
-                                amount--;
-                              },
-                            )
-                          }
-                      },
+                      onTap: () => substractAmount(),
                       child: Container(
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
                             color: Get.theme.primaryColor,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10))),
+                            borderRadius: BorderRadius.circular(10)),
                         child: Center(
                           child: Icon(
                             Icons.remove_outlined,
@@ -123,29 +115,19 @@ class _AddToCartPopUpWidgetState extends State<AddToCartPopUpWidget> {
                     ),
                     Text(
                       amount.toString(),
-                      style: TextStyle(
-                          color: Get.theme.shadowColor,
-                          fontSize: 18,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.bold),
+                      style: Get.theme.textTheme.bodyText1,
                     ),
                     const SizedBox(
                       width: 24,
                     ),
                     InkWell(
-                      onTap: () => {
-                        setState((() {
-                          amount++;
-                          showError = false;
-                        }))
-                      },
+                      onTap: () => addAmount(),
                       child: Container(
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
                             color: Get.theme.primaryColor,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10))),
+                            borderRadius: BorderRadius.circular(10)),
                         child: Center(
                           child: Icon(
                             Icons.add_outlined,
@@ -192,13 +174,10 @@ class _AddToCartPopUpWidgetState extends State<AddToCartPopUpWidget> {
                       ),
                       Text(
                         'Take away',
-                        style: TextStyle(
-                            fontFamily: 'Lato',
+                        style: Get.theme.textTheme.bodyText1!.apply(
                             color: isTakeaway
                                 ? Get.theme.primaryColor
-                                : Get.theme.dividerColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
+                                : Get.theme.dividerColor),
                       ),
                     ],
                   ),
@@ -213,11 +192,7 @@ class _AddToCartPopUpWidgetState extends State<AddToCartPopUpWidget> {
                 ),
                 child: Text(
                   'Jumlah tidak boleh kosong',
-                  style: TextStyle(
-                    fontFamily: 'Lato',
-                    color: Get.theme.errorColor,
-                    fontSize: 16,
-                  ),
+                  style: Get.theme.textTheme.subtitle1,
                 ),
               ),
             ),
@@ -226,11 +201,7 @@ class _AddToCartPopUpWidgetState extends State<AddToCartPopUpWidget> {
             ),
             Text(
               'Notes',
-              style: TextStyle(
-                  fontFamily: 'Lato',
-                  fontWeight: FontWeight.bold,
-                  color: Get.theme.shadowColor,
-                  fontSize: 20),
+              style: Get.theme.textTheme.bodyText1,
             ),
             const SizedBox(
               height: 12,
@@ -241,82 +212,50 @@ class _AddToCartPopUpWidgetState extends State<AddToCartPopUpWidget> {
               minLines: 4,
               cursorColor: Get.theme.primaryColor,
               decoration: InputDecoration(
-                  hintText: 'Example: tidak pakai sayur, pedas banget',
-                  hintStyle: TextStyle(
-                      fontFamily: 'Lato',
-                      fontSize: 16,
-                      color: Get.theme.disabledColor),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.transparent),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.transparent),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.transparent),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  filled: true,
-                  fillColor: Get.theme.backgroundColor),
+                filled: true,
+                fillColor: Get.theme.backgroundColor,
+                hintText: 'Example: tidak pakai sayur, pedas banget',
+                hintStyle: Get.theme.textTheme.bodyText2,
+                border: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.transparent),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.transparent),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.transparent),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
             ),
             const SizedBox(
               height: 24,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
               children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      log(amount.toString());
-                      var notes = isTakeaway
-                          ? 'TAKE AWAY${notesTextEditingController.text.isNotEmpty ? ', ${notesTextEditingController.text}' : ''}'
-                          : notesTextEditingController.text;
-                      if (amount > 0) {
-                        Map<String, dynamic> itemDetails = {
-                          'item': widget.item,
-                          'amount': amount,
-                          'isTakeaway': isTakeaway,
-                          'notes': notes,
-                          'total': widget.item['price'] * amount
-                        };
-                        log(itemDetails.toString());
-                        cartItems.add(itemDetails);
-                        getStorage.write('currentCart', cartItems);
-                        widget.refreshParent();
-                        Get.back();
+                FlexibleWidthButtonWidget(
+                    buttonText: 'Add to cart',
+                    textColor: Get.theme.highlightColor,
+                    buttonColor: Get.theme.primaryColor,
+                    onButtonTap: () {
+                      if (amount == 0) {
+                        setState(() {
+                          showError = true;
+                        });
                         return;
                       }
-                      setState(() {
-                        showError = true;
-                      });
-                    },
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Get.theme.primaryColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Add to cart',
-                          style: TextStyle(
-                              fontFamily: 'Lato',
-                              color: Get.theme.highlightColor,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w900),
-                        ),
-                      ),
-                    ),
-                  ),
-                )
+
+                      var itemDetails = mapToCart(widget.item, amount,
+                          isTakeaway, notesTextEditingController.text);
+                      addItemToCart(itemDetails);
+
+                      widget.refreshParent();
+                      Get.back();
+                    }),
               ],
-            ),
+            )
           ],
         ),
       ),

@@ -50,11 +50,20 @@ class CashierApp extends StatelessWidget {
                 color: Get.theme.shadowColor,
                 fontSize: 24,
                 fontWeight: FontWeight.bold),
+            headline2: TextStyle(
+                fontFamily: 'Lato',
+                color: Get.theme.errorColor,
+                fontSize: 32,
+                fontWeight: FontWeight.w900),
             bodyText1: TextStyle(
                 fontFamily: 'Lato',
                 color: Get.theme.shadowColor,
                 fontSize: 18,
                 fontWeight: FontWeight.bold),
+            bodyText2: TextStyle(
+                fontFamily: 'Lato',
+                color: Get.theme.disabledColor,
+                fontSize: 16),
             subtitle1: TextStyle(
                 fontFamily: 'Lato',
                 color: Get.theme.errorColor,

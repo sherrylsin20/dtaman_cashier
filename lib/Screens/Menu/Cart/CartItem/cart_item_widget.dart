@@ -1,4 +1,4 @@
-import 'package:dtaman_cashier/Screens/Menu/Cart/cart_service.dart';
+import 'package:dtaman_cashier/Screens/Menu/menu_service.dart';
 import 'package:dtaman_cashier/Utilities/string_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -33,6 +33,9 @@ class _CartItemWidgetState extends State<CartItemWidget> {
             onPressed: (context) {
               removeItemFromCart(widget.index);
               widget.refreshParent();
+              setState(() {
+                
+              });
             },
             backgroundColor: Get.theme.errorColor,
             icon: Icons.delete_rounded,
