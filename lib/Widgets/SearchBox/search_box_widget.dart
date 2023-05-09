@@ -34,9 +34,9 @@ class _SearchBoxWidgetState extends State<SearchBoxWidget> {
             hintText: 'Search',
             hintStyle: Get.theme.textTheme.bodyText1,
             contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-            border: const OutlineInputBorder(
+            border: OutlineInputBorder(
                 borderSide: BorderSide.none,
-                borderRadius: BorderRadius.all(Radius.circular(15))),
+                borderRadius: BorderRadius.circular(15)),
             suffixIcon: IconButton(
               icon: Icon(
                 Icons.clear_outlined,

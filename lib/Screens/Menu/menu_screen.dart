@@ -1,12 +1,9 @@
-import 'package:dtaman_cashier/Screens/Menu/Cart/cart_service.dart';
+import 'package:dtaman_cashier/Screens/Menu/Cart/CartItemList/cart_item_list_widget.dart';
+import 'package:dtaman_cashier/Screens/Menu/Cart/cart_widget.dart';
 import 'package:dtaman_cashier/Screens/Menu/MenuGrid/menu_grid_widget.dart';
-import 'package:dtaman_cashier/Screens/Menu/MenuItemCard/menu_item_card_widget.dart';
 import 'package:dtaman_cashier/Services/load_menu_services.dart';
-import 'package:dtaman_cashier/Utilities/string_formatter.dart';
 import 'package:dtaman_cashier/Widgets/SearchBox/search_box_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -19,7 +16,6 @@ class _MenuScreenState extends State<MenuScreen> {
   TextEditingController searchTextEditingController = TextEditingController();
   List menuItems = [];
   List filteredMenus = [];
-  final getStorage = GetStorage('order');
   double totalCart = 0;
 
   @override
@@ -55,6 +51,7 @@ class _MenuScreenState extends State<MenuScreen> {
   void refresh() {
     loadMenuItems();
     setState(() {});
+    CartItemListWidget.globalKey.currentState!.refreshList();
   }
 
   @override
@@ -75,10 +72,11 @@ class _MenuScreenState extends State<MenuScreen> {
                 menuItems: filteredMenus,
                 refreshParent: refresh,
                 isMenuEmpty: filteredMenus.isEmpty,
-              )
+              ),
             ],
           ),
         ),
+        const CartWidget()
         // Expanded(
         //   child: Container(
         //     padding: const EdgeInsetsDirectional.all(12),
