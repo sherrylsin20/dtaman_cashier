@@ -43,9 +43,14 @@ class CashierApp extends StatelessWidget {
           focusColor: const Color(0xFF7BD56C),
           errorColor: const Color(0xFFF74141),
           backgroundColor: const Color(0xFFE6E6E6),
-          cardColor: const Color(0xFFE6E6E6)
+          cardColor: const Color(0xFFE6E6E6),
+          textTheme: TextTheme(
+            bodyText1: TextStyle(
+                fontFamily: 'Lato',
+                color: Get.theme.dividerColor,
+                fontSize: 18),
+          ),
         ),
-        darkTheme: ThemeData(),
         home: const PageViewScreen());
   }
 }

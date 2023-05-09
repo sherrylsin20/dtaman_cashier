@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dtaman_cashier/Screens/Menu/menu_screen.dart';
 import 'package:dtaman_cashier/Screens/PageView/SideMenu/side_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,8 @@ class PageViewScreen extends StatefulWidget {
 
 class _PageViewScreenState extends State<PageViewScreen> {
   final PageController _pageController = PageController();
-  final List<dynamic> pageItems = [];
+  final List<dynamic> pageItems = [const MenuScreen()];
+  int currentPageIndex = 0;
 
   @override
   void initState() {
@@ -34,7 +36,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
     return Material(
       child: SafeArea(
         child: Container(
-          color: Get.theme.colorScheme.secondary,
+          color: Get.theme.backgroundColor,
           height: Get.height,
           width: Get.width,
           child: Row(
@@ -42,12 +44,24 @@ class _PageViewScreenState extends State<PageViewScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SideMenuWidget(setActivePage: setActivePage),
-              // Expanded(
-              //   child: Container(
-              //     height: Get.size.height,
-              //     color: Get.theme.colorScheme.secondary,
-              //   ),
-              // ),
+              Expanded(
+                child: Container(
+                  color: Colors.transparent,
+                  child: PageView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    onPageChanged: (page) {
+                      setState(() {
+                        currentPageIndex = page;
+                      });
+                    },
+                    controller: _pageController,
+                    itemBuilder: (context, pageIndex) {
+                      return pageItems[pageIndex];
+                    },
+                    itemCount: pageItems.length,
+                  ),
+                ),
+              )
             ],
           ),
         ),
