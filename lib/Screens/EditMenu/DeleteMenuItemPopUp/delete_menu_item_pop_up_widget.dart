@@ -6,13 +6,9 @@ import 'package:get/get.dart';
 
 class DeleteMenuItemPopUpWidget extends StatefulWidget {
   final Function refreshParent;
-  final String name;
-  final int index;
+  final dynamic item;
   const DeleteMenuItemPopUpWidget(
-      {Key? key,
-      required this.refreshParent,
-      required this.name,
-      required this.index})
+      {Key? key, required this.refreshParent, required this.item})
       : super(key: key);
 
   @override
@@ -36,7 +32,7 @@ class _DeleteMenuItemPopUpWidgetState extends State<DeleteMenuItemPopUpWidget> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Hapus item\n${widget.name} ?',
+            'Hapus item\n${widget.item['name']} ?',
             style: Get.theme.textTheme.headline1,
             textAlign: TextAlign.center,
           ),
@@ -53,10 +49,10 @@ class _DeleteMenuItemPopUpWidgetState extends State<DeleteMenuItemPopUpWidget> {
                   textColor: Get.theme.highlightColor,
                   buttonColor: Get.theme.errorColor,
                   onButtonTap: () {
-                    deleteItem(widget.index);
+                    deleteItem(widget.item);
 
                     Fluttertoast.showToast(
-                        msg: 'Item ${widget.name} berhasil dihapus',
+                        msg: 'Item ${widget.item['name']} berhasil dihapus',
                         toastLength: Toast.LENGTH_SHORT,
                         backgroundColor: Get.theme.primaryColor,
                         textColor: Get.theme.highlightColor);

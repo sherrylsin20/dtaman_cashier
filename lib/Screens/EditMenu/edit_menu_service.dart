@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -6,7 +7,7 @@ Map<String, dynamic> mapMenuItem(String name, int price, bool availability) {
   return {'name': name, 'price': price, 'availability': availability};
 }
 
-void updateItem(item, index) async {
+void updateItem(item) async {
   final SharedPreferences sharedPreferences =
       await SharedPreferences.getInstance();
 
@@ -14,7 +15,8 @@ void updateItem(item, index) async {
   Map<String, dynamic> currentMenu = json.decode(menu);
   List menuList = currentMenu['menu'] ?? [];
 
-  menuList[index] = item;
+  int updatedIndex = menuList.indexWhere((menuItem) => menuItem['name'] == item['name']);
+  menuList[updatedIndex] = item;
   currentMenu['menu'] = menuList;
 
   sharedPreferences.setString('menu', json.encode(currentMenu));
@@ -34,7 +36,8 @@ void addItem(item) async {
   sharedPreferences.setString('menu', json.encode(currentMenu));
 }
 
-void deleteItem(index) async {
+void deleteItem(item) async {
+  log(item.toString());
   final SharedPreferences sharedPreferences =
       await SharedPreferences.getInstance();
 
@@ -42,7 +45,7 @@ void deleteItem(index) async {
   Map<String, dynamic> currentMenu = json.decode(menu);
   List<dynamic> menuList = currentMenu['menu'] ?? [];
 
-  menuList.removeAt(index);
+  menuList.removeWhere((menuItem) => menuItem['name'] == item['name']);
   currentMenu['menu'] = menuList;
 
   sharedPreferences.setString('menu', json.encode(currentMenu));

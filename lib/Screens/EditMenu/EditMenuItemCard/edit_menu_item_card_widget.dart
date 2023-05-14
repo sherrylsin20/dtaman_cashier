@@ -1,4 +1,5 @@
 import 'package:dtaman_cashier/Screens/EditMenu/DeleteMenuItemPopUp/delete_menu_item_pop_up_widget.dart';
+import 'package:dtaman_cashier/Screens/EditMenu/UpdateMenuItemPopUp/update_menu_item_pop_up_widget.dart';
 import 'package:dtaman_cashier/Screens/EditMenu/edit_menu_service.dart';
 import 'package:dtaman_cashier/Services/show_pop_up_services.dart';
 import 'package:dtaman_cashier/Utilities/string_formatter.dart';
@@ -71,7 +72,7 @@ class _EditMenuItemCardWidgetState extends State<EditMenuItemCardWidget> {
                         var updatedItem = widget.item;
 
                         updatedItem['availability'] = value;
-                        updateItem(updatedItem, widget.index);
+                        updateItem(updatedItem);
                         setState(() {});
                       },
                       activeColor: Get.theme.primaryColor,
@@ -93,8 +94,7 @@ class _EditMenuItemCardWidgetState extends State<EditMenuItemCardWidget> {
                             context,
                             DeleteMenuItemPopUpWidget(
                                 refreshParent: widget.refreshParent,
-                                name: widget.item['name'],
-                                index: widget.index));
+                                item: widget.item));
                       },
                       child: Container(
                         height: 40,
@@ -116,7 +116,12 @@ class _EditMenuItemCardWidgetState extends State<EditMenuItemCardWidget> {
                     ),
                     InkWell(
                       onTap: () {
-                        showPopup(context, Container());
+                        showPopup(
+                            context,
+                            UpdateMenuItemPopUpWidget(
+                                refreshParent: widget.refreshParent,
+                                item: widget.item,
+                                index: widget.index));
                       },
                       child: Container(
                         height: 40,
