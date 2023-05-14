@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dtaman_cashier/Screens/Menu/AddToCartPopUp/add_to_cart_pop_up_widget.dart';
+import 'package:dtaman_cashier/Services/show_pop_up_services.dart';
 import 'package:dtaman_cashier/Utilities/string_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,10 @@ class MenuItemCardWidget extends StatefulWidget {
 }
 
 class _MenuItemCardWidgetState extends State<MenuItemCardWidget> {
+  String _getAvailability(bool availability) {
+    return availability ? 'Available' : 'Not Available';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,24 +39,17 @@ class _MenuItemCardWidgetState extends State<MenuItemCardWidget> {
           children: [
             Text(
               widget.item['name'],
-              style: TextStyle(
-                  fontFamily: 'Lato',
-                  fontSize: 24,
-                  color: Get.theme.shadowColor,
-                  fontWeight: FontWeight.bold),
+              style: Get.theme.textTheme.headline1,
             ),
             const SizedBox(
               height: 3,
             ),
             Text(
-              widget.item['availability'] ? 'Available' : 'Not Available',
-              style: TextStyle(
-                  fontFamily: 'Lato',
-                  fontSize: 18,
+              _getAvailability(widget.item['availability']),
+              style: Get.theme.textTheme.bodyText1!.apply(
                   color: widget.item['availability']
                       ? Get.theme.focusColor
-                      : Get.theme.errorColor,
-                  fontWeight: FontWeight.bold),
+                      : Get.theme.errorColor),
             ),
             const Expanded(
               child: SizedBox(),
@@ -63,34 +61,16 @@ class _MenuItemCardWidgetState extends State<MenuItemCardWidget> {
               children: [
                 Text(
                   currencyWithSymbolFormatter(widget.item['price']),
-                  style: TextStyle(
-                    color: Get.theme.shadowColor,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Lato',
-                  ),
+                  style: Get.theme.textTheme.headline1,
                 ),
                 InkWell(
                   onTap: () {
                     widget.item['availability']
-                        ? showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (BuildContext builder) {
-                              return Container(
-                                  padding: EdgeInsets.only(
-                                      bottom: MediaQuery.of(context)
-                                          .viewInsets
-                                          .bottom),
-                                  color: Colors.transparent,
-                                  height: Get.size.height,
-                                  child: Center(
-                                    child: AddToCartPopUpWidget(
-                                        item: widget.item,
-                                        refreshParent: widget.refreshMenuState),
-                                  ));
-                            })
+                        ? showPopup(
+                            context,
+                            AddToCartPopUpWidget(
+                                item: widget.item,
+                                refreshParent: widget.refreshMenuState))
                         : null;
                   },
                   child: Container(
@@ -100,8 +80,7 @@ class _MenuItemCardWidgetState extends State<MenuItemCardWidget> {
                         color: widget.item['availability']
                             ? Get.theme.primaryColor
                             : Get.theme.disabledColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
+                        borderRadius: BorderRadius.circular(10)),
                     child: Center(
                       child: Icon(
                         Icons.add_outlined,

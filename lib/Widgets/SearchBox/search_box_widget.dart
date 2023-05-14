@@ -19,36 +19,44 @@ class SearchBoxWidget extends StatefulWidget {
 class _SearchBoxWidgetState extends State<SearchBoxWidget> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 60,
-      width: Get.size.width * 0.5,
-      child: TextField(
-        controller: widget.searchTextEditingController,
-        onChanged: (input) {
-          widget.onChangeText(input);
-        },
-        cursorColor: Get.theme.primaryColor,
-        decoration: InputDecoration(
-            filled: true,
-            fillColor: Get.theme.highlightColor,
-            hintText: 'Search',
-            hintStyle: Get.theme.textTheme.bodyText1,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-            border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(15)),
-            suffixIcon: IconButton(
-              icon: Icon(
-                Icons.clear_outlined,
-                size: 32,
-                color: Get.theme.dividerColor,
-              ),
-              onPressed: () {
-                widget.searchTextEditingController.clear();
-                widget.onClearText();
+    return Row(
+      children: [
+        Expanded(
+          child: SizedBox(
+            height: 60,
+            child: TextField(
+              controller: widget.searchTextEditingController,
+              onChanged: (input) {
+                widget.onChangeText(input);
               },
-            )),
-      ),
+              cursorColor: Get.theme.primaryColor,
+              style: Get.theme.textTheme.bodyText1,
+              decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Get.theme.highlightColor,
+                  hintText: 'Search',
+                  hintStyle: Get.theme.textTheme.bodyText1!.apply(
+                    color: Get.theme.disabledColor
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(15)),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      Icons.clear_outlined,
+                      size: 32,
+                      color: Get.theme.dividerColor,
+                    ),
+                    onPressed: () {
+                      widget.searchTextEditingController.clear();
+                      widget.onClearText();
+                    },
+                  )),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

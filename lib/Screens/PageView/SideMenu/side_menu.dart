@@ -36,7 +36,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                   return InkWell(
                     onTap: () => setState(() {
                       _selectedIndex = index;
-                      // widget.setActivePage(index);
+                      widget.setActivePage(index);
                     }),
                     child: SideMenuButtonWidget(
                       icon: currentMenuOption['icon'],
