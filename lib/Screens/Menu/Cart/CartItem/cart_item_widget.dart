@@ -8,7 +8,12 @@ class CartItemWidget extends StatefulWidget {
   final Map<String, dynamic> item;
   final int index;
   final Function refreshParent;
-  const CartItemWidget({Key? key, required this.item, required this.index, required this.refreshParent}) : super(key: key);
+  const CartItemWidget(
+      {Key? key,
+      required this.item,
+      required this.index,
+      required this.refreshParent})
+      : super(key: key);
 
   @override
   State<CartItemWidget> createState() => _CartItemWidgetState();
@@ -33,16 +38,17 @@ class _CartItemWidgetState extends State<CartItemWidget> {
             onPressed: (context) {
               removeItemFromCart(widget.index);
               widget.refreshParent();
-              setState(() {
-                
-              });
+              setState(() {});
             },
             backgroundColor: Get.theme.errorColor,
             icon: Icons.delete_rounded,
             label: 'Delete',
           ),
           SlidableAction(
-            onPressed: (context) {},
+            onPressed: (context) {
+              widget.refreshParent();
+              setState(() {});
+            },
             backgroundColor: Get.theme.primaryColor,
             icon: Icons.edit_rounded,
             label: 'Edit',
