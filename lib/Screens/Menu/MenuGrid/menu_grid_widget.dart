@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dtaman_cashier/Screens/Menu/MenuItemCard/menu_item_card_widget.dart';
 import 'package:dtaman_cashier/Widgets/EmptyList/empty_list_widget.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +5,7 @@ import 'package:get/get.dart';
 
 class MenuGridWidget extends StatefulWidget {
   final List menuItems;
-  final Function() refreshParent;
+  final Function refreshParent;
   final bool isMenuEmpty;
   const MenuGridWidget(
       {Key? key,

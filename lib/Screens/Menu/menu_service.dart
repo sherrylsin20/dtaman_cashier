@@ -6,6 +6,10 @@ List getCurrentCart() {
   return getStorage.read('currentCart') ?? [];
 }
 
+void updateCurrentCart(updatedCart) {
+  getStorage.write('currentCart', updatedCart);
+}
+
 String _formatOrderNotes(notes, isTakeaway) {
   String takeawayNotes = isTakeaway ? 'TAKEAWAY' : '';
   String orderNotes = notes.isNotEmpty && isTakeaway ? ', $notes' : '$notes';
@@ -25,17 +29,24 @@ Map<String, dynamic> mapToCart(
 }
 
 void addItemToCart(item) {
-  List currentCart = getStorage.read('currentCart') ?? [];
+  List currentCart = getCurrentCart();
 
   currentCart.add(item);
-  getStorage.write('currentCart', currentCart);
+  updateCurrentCart(currentCart);
 }
 
 void removeItemFromCart(index) {
-  List currentCart = getStorage.read('currentCart');
+  List currentCart = getCurrentCart();
 
   currentCart.removeAt(index);
-  getStorage.write('currentCart', currentCart);
+  updateCurrentCart(currentCart);
+}
+
+void editItemFromCart(index, editedItem) {
+  List currentCart = getCurrentCart();
+
+  currentCart[index] = editedItem;
+  updateCurrentCart(currentCart);
 }
 
 void clearCart() {

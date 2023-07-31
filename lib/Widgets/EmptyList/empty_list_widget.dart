@@ -26,7 +26,7 @@ class _EmptyListWidgetState extends State<EmptyListWidget> {
           height: 12,
         ),
         Text(
-          'Pencarian tidak ditemukan',
+          'Nothing found!',
           style: Get.theme.textTheme.bodyText1!
               .apply(color: Get.theme.dividerColor),
         ),

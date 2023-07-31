@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,7 +36,6 @@ void addItem(item) async {
 }
 
 void deleteItem(item) async {
-  log(item.toString());
   final SharedPreferences sharedPreferences =
       await SharedPreferences.getInstance();
 

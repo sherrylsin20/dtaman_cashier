@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dtaman_cashier/Screens/Menu/AddToCartPopUp/add_to_cart_pop_up_widget.dart';
 import 'package:dtaman_cashier/Services/show_pop_up_services.dart';
 import 'package:dtaman_cashier/Utilities/string_formatter.dart';
@@ -8,7 +6,7 @@ import 'package:get/get.dart';
 
 class MenuItemCardWidget extends StatefulWidget {
   final dynamic item;
-  final Function() refreshMenuState;
+  final Function refreshMenuState;
   const MenuItemCardWidget(
       {Key? key, required this.item, required this.refreshMenuState})
       : super(key: key);
