@@ -15,3 +15,8 @@ int numberFormatter(String value) {
   String formattedValue = value.replaceAll(RegExp(r'[^0-9]'), '');
   return int.parse(formattedValue);
 }
+
+String dateFormatter(DateTime timestamp) {
+  final formattedTimestamp = DateFormat('dd-MM-yy HH:mm');
+  return formattedTimestamp.format(timestamp).toString();
+}

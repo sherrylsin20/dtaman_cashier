@@ -1,23 +1,43 @@
-import 'package:dtaman_cashier/Screens/Menu/Cart/CartItemList/cart_item_list_widget.dart';
-import 'package:dtaman_cashier/Screens/Menu/SaveOrderPopUp/save_order_pop_up_widget.dart';
-import 'package:dtaman_cashier/Screens/Menu/menu_service.dart';
-import 'package:dtaman_cashier/Services/show_pop_up_services.dart';
+import 'dart:developer';
+
+import 'package:dtaman_cashier/Screens/SavedOrders/SavedCart/SavedCartItemList/saved_cart_item_list_widget.dart';
+import 'package:dtaman_cashier/Screens/SavedOrders/fixtures.dart';
 import 'package:dtaman_cashier/Utilities/string_formatter.dart';
 import 'package:dtaman_cashier/Widgets/FlexibleWidthButton/flexible_width_button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-class CartWidget extends StatefulWidget {
-  const CartWidget({Key? key}) : super(key: key);
+class SavedCartWidget extends StatefulWidget {
+  const SavedCartWidget({Key? key}) : super(key: key);
 
   @override
-  State<CartWidget> createState() => _CartWidgetState();
+  State<SavedCartWidget> createState() => _SavedCartWidgetState();
 }
 
-class _CartWidgetState extends State<CartWidget> {
-  void refresh() {
-    setState(() {});
+class _SavedCartWidgetState extends State<SavedCartWidget> {
+  int currentOrderIndex = 0;
+  dynamic currentOrder;
+
+  @override
+  void initState() {
+    super.initState();
+    loadOrders();
+  }
+
+  void loadOrders() async {
+    // Map<String, dynamic> savedOrdersData = await loadSavedOrders();
+
+    setState(() {
+      var orderResponse = orders['orders'] ?? [];
+      currentOrder = orderResponse[currentOrderIndex];
+    });
+  }
+
+  void refresh(value) {
+    setState(() {
+      currentOrderIndex = value;
+    });
+    loadOrders();
   }
 
   @override
@@ -32,22 +52,7 @@ class _CartWidgetState extends State<CartWidget> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text('Current order', style: Get.theme.textTheme.headline1),
-                InkWell(
-                  onTap: () {
-                    clearCart();
-                    setState(() {});
-                  },
-                  child:
-                      Text('Clear order', style: Get.theme.textTheme.subtitle1),
-                ),
-              ],
-            ),
+            Text('Order', style: Get.theme.textTheme.headline1),
             const SizedBox(
               height: 12,
             ),
@@ -58,7 +63,10 @@ class _CartWidgetState extends State<CartWidget> {
             const SizedBox(
               height: 12,
             ),
-            CartItemListWidget(refreshParent: refresh),
+            SavedCartItemListWidget(
+              order: currentOrder,
+              refresh: refresh,
+            ),
             const SizedBox(
               height: 12,
             ),
@@ -72,7 +80,7 @@ class _CartWidgetState extends State<CartWidget> {
                   style: Get.theme.textTheme.bodyText1,
                 ),
                 Text(
-                  currencyWithSymbolFormatter(getTotal()),
+                  currencyWithSymbolFormatter(20000),
                   style: Get.theme.textTheme.headline1,
                 ),
               ],
@@ -86,21 +94,7 @@ class _CartWidgetState extends State<CartWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 FlexibleWidthButtonWidget(
-                    buttonText: 'Save Order',
-                    textColor: Get.theme.highlightColor,
-                    buttonColor: Get.theme.disabledColor,
-                    onButtonTap: () {
-                      bool success = saveCart();
-
-                      if (success) {
-                        showPopup(context, SaveOrderPopUpWidget());
-                      }
-                    }),
-                const SizedBox(
-                  width: 12,
-                ),
-                FlexibleWidthButtonWidget(
-                    buttonText: 'Pay',
+                    buttonText: 'Apply Current Order',
                     textColor: Get.theme.highlightColor,
                     buttonColor: Get.theme.primaryColor,
                     onButtonTap: () {}),

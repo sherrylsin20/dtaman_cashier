@@ -53,6 +53,16 @@ void clearCart() {
   getStorage.remove('currentCart');
 }
 
+bool saveCart() {
+  List currentCart = getCurrentCart();
+
+  if(currentCart.isEmpty) {
+    return false;
+  }
+
+  return true;
+}
+
 int getTotal() {
   double total = 0;
   int currentCartLength = getStorage.read('currentCart')?.length ?? 0;

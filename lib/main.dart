@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:dtaman_cashier/Screens/PageView/page_view_screen.dart';
+import 'package:dtaman_cashier/Utilities/string_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -18,6 +21,7 @@ void main() async {
 
 Future<void> loadMenu() async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  // sharedPreferences.remove('menu');
   String menuResponse = sharedPreferences.getString('menu') ?? '';
 
   if (menuResponse.isEmpty) {
@@ -69,6 +73,8 @@ class CashierApp extends StatelessWidget {
                 color: Get.theme.errorColor,
                 fontSize: 16,
                 fontWeight: FontWeight.bold),
+            caption: TextStyle(
+                fontFamily: 'Lato', color: Get.theme.shadowColor, fontSize: 16),
           ),
         ),
         home: const PageViewScreen());

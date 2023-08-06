@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dtaman_cashier/Screens/EditMenu/edit_menu_screen.dart';
 import 'package:dtaman_cashier/Screens/Menu/menu_screen.dart';
 import 'package:dtaman_cashier/Screens/PageView/SideMenu/side_menu.dart';
+import 'package:dtaman_cashier/Screens/SavedOrders/saved_orders_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +18,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
   final PageController _pageController = PageController();
   final List<dynamic> pageItems = [
     const MenuScreen(),
+    const SavedOrdersScreen(),
     const EditMenuScreen()
   ];
   int currentPageIndex = 0;
@@ -33,7 +35,6 @@ class _PageViewScreenState extends State<PageViewScreen> {
 
   void setActivePage(index) {
     _pageController.jumpToPage(index);
-    log('called $index');
   }
 
   @override
